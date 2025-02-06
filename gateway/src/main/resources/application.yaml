@@ -18,6 +18,10 @@ spring:
           uri: lb://school
           predicates:
             - Path=/school/**
+        - id: authentification
+          uri: lb://authentification
+          predicates:
+            - Path=/auth/**
 
 eureka:
   client:
