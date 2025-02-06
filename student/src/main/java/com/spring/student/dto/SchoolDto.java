@@ -6,7 +6,7 @@ public class SchoolDto {
 
     private String name;
 
-    private String adress;
+    private String address;
 
     private String directorName;
 
@@ -26,12 +26,12 @@ public class SchoolDto {
         this.name = name;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String address) {
+        this.address = address;
     }
 
     public String getDirectorName() {

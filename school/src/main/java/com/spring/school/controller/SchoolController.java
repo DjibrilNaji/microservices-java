@@ -26,13 +26,13 @@ public class SchoolController {
         return schoolService.findById(id);
     }
 
-    @PostMapping("/add-school")
+    @PostMapping
     public ResponseEntity<School> addSchool(@RequestBody School school) {
         School responseSchool = schoolService.postSchool(school);
         return ResponseEntity.ok(responseSchool);
     }
 
-    @DeleteMapping("/delete-school")
+    @DeleteMapping
     public ResponseEntity<Boolean> deleteSchool(@PathVariable Long id) {
         schoolService.deleteSchool(id);
 

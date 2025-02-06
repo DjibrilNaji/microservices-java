@@ -1,7 +1,5 @@
 package com.spring.student.dto;
 
-import com.spring.student.entity.Student;
-
 public class StudentDto {
     private String id;
 
