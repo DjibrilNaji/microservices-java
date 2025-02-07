@@ -26,7 +26,15 @@ public class SchoolService {
       return schoolRepository.save(school);
     }
 
-    public void deleteSchool(Long id) {
-        schoolRepository.deleteById(id);
+    public School deleteSchool(Long id) {
+        final var school = schoolRepository.findById(id);
+
+        if (school.isEmpty()) {
+            throw new IllegalArgumentException("School not found");
+        }
+
+        schoolRepository.delete(school.get());
+
+        return school.get();
     }
 }

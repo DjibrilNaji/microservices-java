@@ -1,5 +1,5 @@
 server:
-  port: 8083
+  port: 8080
 
 spring:
   application:
@@ -14,10 +14,14 @@ spring:
           uri: lb://student
           predicates:
             - Path=/student/**
+
         - id: school
           uri: lb://school
           predicates:
             - Path=/school/**
+          filters:
+            - JwtAuthFilter
+
         - id: authentification
           uri: lb://authentification
           predicates:

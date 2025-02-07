@@ -1,6 +1,8 @@
 package com.spring.authentification.service;
 
 import com.spring.authentification.dto.LoginResponseDto;
+import com.spring.authentification.dto.RegisterResponseDto;
+import com.spring.authentification.entity.User;
 import com.spring.authentification.repository.UserRepository;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
@@ -14,6 +16,7 @@ import java.util.Date;
 @Service
 public class UserService {
 
+    private static final String SECRET_KEY = "v8HtnMZz1LC9GmXjFqHIk5oZmvqT8zjQK0A0Yuc7HMI=";
     private final UserRepository userRepository;
 
     public UserService(UserRepository userRepository) {
@@ -39,13 +42,13 @@ public class UserService {
     }
 
     public String generateToken(String username) {
-        byte[] keyBytes = Decoders.BASE64.decode("f85831164ceaa621a5657a9afb742b4a855e1b1dcf3955c210027eb8ab3867af2c5bc8457309619fea44592d55cb39e705a9b97c4893a96845584b89d266db55f580560d76fc03ca8a773cb6bc66ce000d604bd355f2f8d7a0aafd975717b9b868745c3191bbc800257984b18695d6b7072a79dfa1cddb4fb63b55c90b74c930d1ef5a43e5455dbc95e0f1abce7483f9e7f21164de903b3ccde0e274f5b7adc3bbe80eeb5c37c6ca7fd87fb64df5aa813ddf7932e6a402b60f87ed1396c1ee673a29fd92ca0cf621201a68053bd42db961530e09f038d4eeb044485d36a2f8831ac4fd4f2daa28a3e32b19518f3aacf1c96317ca43942655c4232a6da3081efa");
+        byte[] keyBytes = Decoders.BASE64.decode(SECRET_KEY);
         Key key = Keys.hmacShaKeyFor(keyBytes);
 
         return Jwts.builder()
                 .subject(username)
                 .issuedAt(new Date())
-                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 heure
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60))
                 .signWith(key)
                 .compact();
     }
@@ -58,5 +61,18 @@ public class UserService {
         }
 
         return user.getPassword().equals(password);
+    }
+
+    public RegisterResponseDto addUser(String username, String password) {
+        final var userExisting = userRepository.findByUsername(username);
+
+        if (userExisting != null) {
+            return new RegisterResponseDto(HttpStatus.UNAUTHORIZED, "User already exists");
+        }
+
+        final var user = new User(username, password);
+        userRepository.save(user);
+
+        return new RegisterResponseDto(HttpStatus.OK, "User created");
     }
 }

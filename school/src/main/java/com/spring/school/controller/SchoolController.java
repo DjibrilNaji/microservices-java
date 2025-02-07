@@ -32,10 +32,8 @@ public class SchoolController {
         return ResponseEntity.ok(responseSchool);
     }
 
-    @DeleteMapping
-    public ResponseEntity<Boolean> deleteSchool(@PathVariable Long id) {
-        schoolService.deleteSchool(id);
-
-        return ResponseEntity.ok(true);
+    @DeleteMapping("/{id}")
+    public School deleteSchool(@PathVariable Long id) {
+        return schoolService.deleteSchool(id);
     }
 }

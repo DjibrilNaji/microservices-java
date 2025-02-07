@@ -23,7 +23,6 @@ public class StudentService {
         return studentRepository.findAll();
     }
 
-
     public StudentDto getStudentWithSchool(String studentId) {
         Student student = studentRepository.findById(studentId)
                 .orElseThrow(() -> new RuntimeException("Student not found"));
@@ -38,7 +37,15 @@ public class StudentService {
         return studentRepository.save(student);
     }
 
-    public void deleteSchool(String id) {
-        studentRepository.deleteById(id);
+    public Student deleteStudent(String id) {
+        final var student = studentRepository.findById(id);
+
+        if (student.isEmpty()) {
+            throw new IllegalArgumentException("Student not found");
+        }
+
+        studentRepository.delete(student.get());
+
+        return student.get();
     }
 }

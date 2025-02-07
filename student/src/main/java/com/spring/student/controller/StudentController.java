@@ -33,9 +33,7 @@ public class StudentController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Boolean> deleteSchool(@PathVariable String id) {
-        studentService.deleteSchool(id);
-
-        return ResponseEntity.ok(true);
+    public Student deleteStudent(@PathVariable String id) {
+        return studentService.deleteStudent(id);
     }
 }
