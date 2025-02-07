@@ -19,9 +19,6 @@ spring:
           uri: lb://school
           predicates:
             - Path=/school/**
-          filters:
-            - JwtAuthFilter
-
         - id: authentification
           uri: lb://authentification
           predicates:

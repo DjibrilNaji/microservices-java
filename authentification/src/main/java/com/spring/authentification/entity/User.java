@@ -1,9 +1,15 @@
 package com.spring.authentification.entity;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
+@Data
 public class User {
 
     @Id
@@ -13,11 +19,6 @@ public class User {
     private String username;
 
     private String password;
-
-    public User( String username, String password) {
-        this.username = username;
-        this.password = password;
-    }
 
     public Long getId() {
         return id;

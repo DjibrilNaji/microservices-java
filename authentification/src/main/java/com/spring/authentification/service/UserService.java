@@ -70,7 +70,9 @@ public class UserService {
             return new RegisterResponseDto(HttpStatus.UNAUTHORIZED, "User already exists");
         }
 
-        final var user = new User(username, password);
+        var user = new User();
+        user.setUsername(username);
+        user.setPassword(password);
         userRepository.save(user);
 
         return new RegisterResponseDto(HttpStatus.OK, "User created");
